@@ -1,0 +1,138 @@
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  background-color: var(--white);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brand-icon {
+  font-size: 1.5rem;
+}
+
+.brand-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: -0.5px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.lang-switcher {
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.main-content {
+  flex: 1;
+  padding-bottom: 80px; /* Space for bottom nav */
+}
+
+/* Desktop Top Navigation (hidden on mobile) */
+.top-nav {
+  display: none;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.top-nav-item {
+  color: var(--text-muted);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.top-nav-item:hover, .top-nav-item.active {
+  color: var(--secondary);
+}
+
+/* Mobile-first Bottom Navigation */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--white);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 70px;
+  z-index: 50;
+  border-top: 1px solid var(--danger-light);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.nav-item.active {
+  color: var(--secondary);
+}
+
+.nav-item span {
+  margin-top: 2px;
+}
+
+.sos-item {
+  position: relative;
+  top: -20px;
+}
+
+.sos-btn-wrapper {
+  background-color: var(--accent);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--shadow-emergency);
+  border: 4px solid var(--bg-color);
+  transition: transform var(--transition-fast);
+}
+
+.sos-btn-wrapper:hover {
+  transform: scale(1.05);
+}
+
+@media (min-width: 768px) {
+  .bottom-nav {
+    display: none; /* Hide on larger screens, implement top nav logic if needed */
+  }
+  .main-content {
+    padding-bottom: 0;
+  }
+  .top-nav {
+    display: flex;
+  }
+}
