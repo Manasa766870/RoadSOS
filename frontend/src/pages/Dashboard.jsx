@@ -2,10 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import { EmergencyContext } from '../context/EmergencyContext';
 import ServiceCard from '../components/common/ServiceCard';
 import { Filter, MapPin } from 'lucide-react';
+import { useTranslation } from '../context/LanguageContext';
 import './pages.css';
 
 const Dashboard = () => {
   const { services, loading, error, requestLocation, fetchNearbyServices, location } = useContext(EmergencyContext);
+  const { t } = useTranslation();
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
@@ -33,34 +35,43 @@ const Dashboard = () => {
     }
   };
 
+  const filterOptions = [
+    { key: 'all', value: '' },
+    { key: 'hospital', value: 'Hospital' },
+    { key: 'traumaCenter', value: 'Trauma Center' },
+    { key: 'ambulance', value: 'Ambulance' },
+    { key: 'policeStation', value: 'Police Station' },
+    { key: 'towing', value: 'Towing' }
+  ];
+
   const filteredServices = filter ? services.filter(s => s.type === filter) : services;
 
   return (
     <div className="page-container px-4 py-6">
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-2xl font-bold">Nearby Services</h1>
+          <h1 className="text-2xl font-bold">{t('nearbyServices')}</h1>
           <p className="text-sm text-muted flex items-center">
             <MapPin size={14} className="mr-1" />
-            {location ? 'Within 50km radius' : 'Locating you...'}
+            {location ? t('withinRadius') : t('locatingYou')}
           </p>
         </div>
         <button className="icon-btn bg-white shadow-sm border"><Filter size={20} /></button>
       </div>
 
       <div className="filter-chips mb-6">
-        {['All', 'Hospital', 'Trauma Center', 'Ambulance', 'Police Station', 'Towing'].map(f => (
-          <button 
-            key={f} 
-            className={`chip ${filter === f || (f === 'All' && !filter) ? 'active' : ''}`}
-            onClick={() => setFilter(f === 'All' ? '' : f)}
+        {filterOptions.map((option) => (
+          <button
+            key={option.key}
+            className={`chip ${filter === option.value || (option.value === '' && !filter) ? 'active' : ''}`}
+            onClick={() => setFilter(option.value)}
           >
-            {f}
+            {t(option.key)}
           </button>
         ))}
       </div>
 
-      {loading && <div className="text-center py-10">Fetching nearby help...</div>}
+      {loading && <div className="text-center py-10">{t('fetchingNearbyHelp')}</div>}
       {error && <div className="text-danger text-center py-4 bg-danger-light rounded-md">{error}</div>}
 
       <div className="services-list">
@@ -73,7 +84,7 @@ const Dashboard = () => {
           />
         ))}
         {!loading && filteredServices.length === 0 && (
-          <div className="text-center py-10 text-muted">No services found in this area.</div>
+          <div className="text-center py-10 text-muted">{t('noServicesFound')}</div>
         )}
       </div>
     </div>

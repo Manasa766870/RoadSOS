@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { EmergencyContext } from '../context/EmergencyContext';
+import { useTranslation } from '../context/LanguageContext';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -38,6 +39,7 @@ const MapPanner = ({ center }) => {
 
 const MapView = () => {
   const { services, location, requestLocation, fetchNearbyServices } = useContext(EmergencyContext);
+  const { t } = useTranslation();
   const [route, setRoute] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
 
@@ -87,7 +89,7 @@ const MapView = () => {
           {/* User Location Marker */}
           {location && (
             <Marker position={[location.lat, location.lng]} icon={userIcon}>
-              <Popup>You are here</Popup>
+              <Popup>{t('youAreHere')}</Popup>
             </Marker>
           )}
 
@@ -107,10 +109,10 @@ const MapView = () => {
               >
                 <Popup>
                   <strong>{service.name}</strong><br/>
-                  {service.type}<br/>
+                  {t(service.type === 'Police Station' ? 'policeStation' : service.type.replace(/ /g, '').toLowerCase())}<br/>
                   <a href={`tel:${service.contactNumber}`}>{service.contactNumber}</a><br/>
                   {selectedService?._id === service._id && route && (
-                    <span style={{color: 'green'}}>Route plotted!</span>
+                    <span style={{color: 'green'}}>{t('routePlotted')}</span>
                   )}
                 </Popup>
               </Marker>

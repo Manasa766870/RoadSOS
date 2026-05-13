@@ -1,11 +1,14 @@
 import React from 'react';
 import { Phone, Navigation, Clock, CheckCircle } from 'lucide-react';
+import { useTranslation } from '../../context/LanguageContext';
 import Button from './Button';
 
 const ServiceCard = ({ service, onCall, onNavigate }) => {
+  const { t } = useTranslation();
   const distanceStr = service.distance ? `${(service.distance / 1000).toFixed(1)} km` : (service.distance === 0 ? '0 km' : 'Near');
   const durationStr = service.duration ? `${Math.ceil(service.duration / 60)} min` : (service.duration === 0 ? '0 min' : '');
-  
+  const serviceTypeKey = service.type === 'Police Station' ? 'policeStation' : service.type.replace(/ /g, '').toLowerCase();
+
   return (
     <div className="card service-card slide-up">
       <div className="service-card-header" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
@@ -24,15 +27,15 @@ const ServiceCard = ({ service, onCall, onNavigate }) => {
           borderRadius: '50%', 
           backgroundColor: service.isOpen ? '#22c55e' : '#ef4444' 
         }}></span>
-        {service.isOpen ? 'Open Now' : 'Closed'} • {service.type}
+        {service.isOpen ? t('openNow') : t('closed')} • {t(serviceTypeKey)}
       </p>
 
       <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
         <Button variant="primary" style={{ flex: 1 }} onClick={() => onCall(service.contactNumber)}>
-          <Phone size={18} /> Call
+          <Phone size={18} /> {t('call')}
         </Button>
         <Button variant="outline" style={{ flex: 1 }} onClick={() => onNavigate(service.location)}>
-          <Navigation size={18} /> Nav
+          <Navigation size={18} /> {t('navigate')}
         </Button>
       </div>
     </div>

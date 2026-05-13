@@ -1,11 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/common/Button';
-import { ShieldAlert, Globe, Clock, ShieldCheck } from 'lucide-react';
+import LanguageSelector from '../components/common/LanguageSelector';
+import { useTranslation } from '../context/LanguageContext';
+import { ShieldAlert, Clock, ShieldCheck } from 'lucide-react';
 import './home.css';
 
 const Home = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <div className="home-container">
@@ -14,17 +17,15 @@ const Home = () => {
           <ShieldAlert color="#ef4444" size={28} />
           <span className="brand-text text-xl ml-2">RoadSOS</span>
         </div>
-        <button className="lang-switcher flex items-center">
-          <Globe size={18} className="mr-1" /> EN
-        </button>
+        <LanguageSelector />
       </header>
 
       <main className="hero-section text-center px-4">
         <h1 className="hero-title animate-slide-up">
-          Emergency Help,<br /> <span className="text-accent">Right When You Need It.</span>
+          {t('emergencyHelpTitle').split('\n')[0]}<br /> <span className="text-accent">{t('emergencyHelpTitle').split('\n')[1]}</span>
         </h1>
         <p className="hero-subtitle animate-slide-up" style={{ animationDelay: '0.1s' }}>
-          Instantly find nearby trauma centers, ambulances, police, and towing services with one tap.
+          {t('heroSubtitle')}
         </p>
 
         <div className="cta-wrapper animate-slide-up" style={{ animationDelay: '0.2s' }}>
@@ -33,23 +34,23 @@ const Home = () => {
             variant="danger" 
             onClick={() => navigate('/dashboard')}
           >
-            Get Help Now
+            {t('getHelpNow')}
           </Button>
         </div>
       </main>
 
       <section className="features-section bg-white px-4 py-8 radius-t-xl shadow-up animate-slide-up" style={{ animationDelay: '0.3s' }}>
-        <h2 className="text-center font-semibold mb-6">Why trust RoadSOS?</h2>
+        <h2 className="text-center font-semibold mb-6">{t('whyTrustTitle')}</h2>
         <div className="features-grid">
           <div className="feature-item">
             <span className="feature-icon bg-blue-100"><Clock color="#2563eb" /></span>
-            <h3>Fast Response</h3>
-            <p>Connects you directly to the closest available services.</p>
+            <h3>{t('fastResponse')}</h3>
+            <p>{t('fastResponseDescription')}</p>
           </div>
           <div className="feature-item">
             <span className="feature-icon bg-green-100"><ShieldCheck color="#16a34a" /></span>
-            <h3>Verified Contacts</h3>
-            <p>100% verified emergency service numbers.</p>
+            <h3>{t('verifiedContacts')}</h3>
+            <p>{t('verifiedContactsDescription')}</p>
           </div>
         </div>
       </section>

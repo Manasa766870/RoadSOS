@@ -42,15 +42,19 @@
 }
 
 .lang-switcher {
-  font-weight: 600;
-  color: var(--text-muted);
-}
+    appearance: none;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text-muted);
+    font-weight: 600;
+    padding: 0.55rem 0.9rem;
+    min-width: 100px;
+    cursor: pointer;
+  }
 
-.main-content {
-  flex: 1;
-  padding-bottom: 80px; /* Space for bottom nav */
-}
-
+  .lang-switcher option {
+    color: var(--text-main);
 /* Desktop Top Navigation (hidden on mobile) */
 .top-nav {
   display: none;

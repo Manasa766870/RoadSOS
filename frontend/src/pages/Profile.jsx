@@ -2,9 +2,11 @@ import React, { useContext, useState } from 'react';
 import { User, Activity, Edit3, Save, X } from 'lucide-react';
 import Button from '../components/common/Button';
 import { EmergencyContext } from '../context/EmergencyContext';
+import { useTranslation } from '../context/LanguageContext';
 
 const Profile = () => {
   const { userProfile, updateUserProfile } = useContext(EmergencyContext);
+  const { t } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState(userProfile);
 
@@ -26,18 +28,18 @@ const Profile = () => {
   return (
     <div className="page-container px-4 py-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Emergency Profile</h1>
+        <h1 className="text-2xl font-bold">{t('emergencyProfile')}</h1>
         {!isEditing ? (
           <Button variant="outline" className="px-3 py-1" onClick={() => setIsEditing(true)}>
-            <Edit3 size={16} className="mr-1" /> Edit
+            <Edit3 size={16} className="mr-1" /> {t('edit')}
           </Button>
         ) : (
           <div className="flex gap-2">
             <Button variant="outline" className="px-3 py-1" onClick={handleCancel}>
-              <X size={16} className="mr-1" /> Cancel
+              <X size={16} className="mr-1" /> {t('cancel')}
             </Button>
             <Button variant="danger" className="px-3 py-1" onClick={handleSave}>
-              <Save size={16} className="mr-1" /> Save
+              <Save size={16} className="mr-1" /> {t('save')}
             </Button>
           </div>
         )}
@@ -56,13 +58,14 @@ const Profile = () => {
                 value={formData.name} 
                 onChange={handleChange}
                 className="w-full mb-2 p-2 border rounded"
+                placeholder={t('userProfileNamePlaceholder')}
               />
             ) : (
               <h2 className="text-xl font-bold">{userProfile.name}</h2>
             )}
             
             <div className="text-muted flex items-center gap-2">
-              Blood Group: 
+              {t('bloodGroup')} 
               {isEditing ? (
                 <input 
                   type="text" 
@@ -80,7 +83,7 @@ const Profile = () => {
 
         <div className="mt-4">
           <h3 className="font-semibold text-danger flex items-center mb-2">
-            <Activity size={18} className="mr-1"/> Medical Notes
+            <Activity size={18} className="mr-1"/> {t('medicalNotes')}
           </h3>
           {isEditing ? (
             <textarea 
@@ -96,7 +99,7 @@ const Profile = () => {
         </div>
       </div>
 
-      <h3 className="font-semibold mb-3">Emergency Contacts</h3>
+      <h3 className="font-semibold mb-3">{t('emergencyContacts')}</h3>
       <div className="flex flex-col gap-3">
         {(isEditing ? formData.emergencyContacts : userProfile.emergencyContacts).map((contact, index) => (
           <div key={contact.id} className="card flex justify-between items-center p-4">
@@ -111,7 +114,7 @@ const Profile = () => {
                     setFormData({...formData, emergencyContacts: newContacts});
                   }}
                   className="w-full mb-1 p-1 border rounded"
-                  placeholder="Contact Name"
+                  placeholder={t('contactNamePlaceholder')}
                 />
                 <input 
                   type="text" 
@@ -122,7 +125,7 @@ const Profile = () => {
                     setFormData({...formData, emergencyContacts: newContacts});
                   }}
                   className="w-full p-1 border rounded text-sm text-muted"
-                  placeholder="Phone Number"
+                  placeholder={t('phoneNumberPlaceholder')}
                 />
               </div>
             ) : (
@@ -131,7 +134,7 @@ const Profile = () => {
                 <p className="text-sm text-muted">{contact.phone}</p>
               </div>
             )}
-            {!isEditing && <Button variant="outline" onClick={() => window.location.href = `tel:${contact.phone}`}>Call</Button>}
+            {!isEditing && <Button variant="outline" onClick={() => window.location.href = `tel:${contact.phone}`}>{t('call')}</Button>}
           </div>
         ))}
       </div>

@@ -1,12 +1,16 @@
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { Home, Map, Bell, User } from 'lucide-react';
+import LanguageSelector from '../common/LanguageSelector';
+import { useTranslation } from '../../context/LanguageContext';
 import './layout.css';
 
 const Layout = () => {
   const location = useLocation();
 
   const isActive = (path) => location.pathname === path ? 'active' : '';
+
+  const { t } = useTranslation();
 
   return (
     <div className="layout-container">
@@ -19,16 +23,16 @@ const Layout = () => {
           
           {/* Desktop Navigation */}
           <nav className="top-nav">
-            <Link to="/dashboard" className={`top-nav-item ${isActive('/dashboard')}`}>Nearby</Link>
-            <Link to="/map" className={`top-nav-item ${isActive('/map')}`}>Map</Link>
-            <Link to="/sos" className={`top-nav-item ${isActive('/sos')} text-accent font-bold`}>SOS</Link>
-            <Link to="/offline" className={`top-nav-item ${isActive('/offline')}`}>Offline</Link>
-            <Link to="/profile" className={`top-nav-item ${isActive('/profile')}`}>Profile</Link>
-            <Link to="/admin" className={`top-nav-item ${isActive('/admin')}`}>Admin</Link>
+            <Link to="/dashboard" className={`top-nav-item ${isActive('/dashboard')}`}>{t('navNearby')}</Link>
+            <Link to="/map" className={`top-nav-item ${isActive('/map')}`}>{t('navMap')}</Link>
+            <Link to="/sos" className={`top-nav-item ${isActive('/sos')} text-accent font-bold`}>{t('navSOS')}</Link>
+            <Link to="/offline" className={`top-nav-item ${isActive('/offline')}`}>{t('navOffline')}</Link>
+            <Link to="/profile" className={`top-nav-item ${isActive('/profile')}`}>{t('navProfile')}</Link>
+            <Link to="/admin" className={`top-nav-item ${isActive('/admin')}`}>{t('navAdmin')}</Link>
           </nav>
 
           <div className="header-actions">
-            <button className="lang-switcher">EN</button>
+            <LanguageSelector />
             <div className="user-icon">
               <User size={20} />
             </div>

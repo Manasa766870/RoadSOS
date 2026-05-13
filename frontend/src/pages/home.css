@@ -6,6 +6,22 @@
   color: var(--white);
 }
 
+.lang-switcher {
+  appearance: none;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 999px;
+  color: var(--white);
+  padding: 0.55rem 0.9rem;
+  min-width: 110px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.lang-switcher option {
+  color: #000;
+}
+
 .home-header {
   display: flex;
   justify-content: space-between;
