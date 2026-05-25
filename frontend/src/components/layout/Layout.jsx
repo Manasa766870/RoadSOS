@@ -16,7 +16,7 @@ const Layout = () => {
     <div className="layout-container">
       <header className="header shadow-sm">
         <div className="container header-inner">
-          <Link to="/" className="brand">
+          <Link to="/home" className="brand">
             <span className="brand-icon">🚨</span>
             <span className="brand-text">RoadSOS</span>
           </Link>

@@ -13,13 +13,28 @@ const Home = () => {
   return (
     <div className="home-container">
       <header className="home-header px-4">
-        <div className="brand">
-          <ShieldAlert color="#ef4444" size={28} />
-          <span className="brand-text text-xl ml-2">RoadSOS</span>
-        </div>
-        <LanguageSelector />
-      </header>
+  <div className="brand">
+    <ShieldAlert color="#ef4444" size={28} />
+    <span className="brand-text text-xl ml-2">RoadSOS</span>
+  </div>
 
+  {/* Right Side Controls */}
+  <div className="flex items-center gap-3">
+    <LanguageSelector />
+
+    <Button
+      className="px-4 py-2 !opacity-100 !visible"
+      variant="danger"
+      onClick={() => {
+        localStorage.removeItem('roadSOSLoggedIn');
+        localStorage.removeItem('roadSOSUser');
+        navigate('/');
+      }}
+    >
+      Logout
+    </Button>
+  </div>
+</header>
       <main className="hero-section text-center px-4">
         <h1 className="hero-title animate-slide-up">
           {t('emergencyHelpTitle').split('\n')[0]}<br /> <span className="text-accent">{t('emergencyHelpTitle').split('\n')[1]}</span>
@@ -36,6 +51,7 @@ const Home = () => {
           >
             {t('getHelpNow')}
           </Button>
+          
         </div>
       </main>
 

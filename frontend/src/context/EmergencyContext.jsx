@@ -1,5 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 
+const API_BASE = 'http://localhost:5000';
+
 export const EmergencyContext = createContext();
 
 export const EmergencyProvider = ({ children }) => {
@@ -8,25 +10,121 @@ export const EmergencyProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
+  const [currentUser, setCurrentUser] = useState(() => {
+    try {
+      const saved = localStorage.getItem('roadSOSUser');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
   
   const defaultProfile = {
     name: 'John Doe',
+    photo: '',
+    address: '123 Main Street, Your City, State',
     bloodGroup: 'O+',
-    medicalNotes: 'Severe allergy to Penicillin. Asthma patient. Carries inhaler in left pocket.',
+    allergies: 'Penicillin',
+    medications: 'Inhaler as needed',
+    medicalNotes: 'Asthma patient. Carry inhaler. Update additional medical details here.',
     emergencyContacts: [
-      { id: 1, name: 'Jane Doe (Wife)', phone: '+91 9876543210' }
+      { id: 1, name: 'Jane Doe (Wife)', phone: '+919876543210' }
     ]
   };
-  
+
+  const getProfileStorageKey = () => {
+    try {
+      const savedUser = JSON.parse(localStorage.getItem('roadSOSUser'));
+      return savedUser && savedUser.email
+        ? `roadSOSUserProfile:${savedUser.email.toLowerCase()}`
+        : 'roadSOSUserProfile:guest';
+    } catch {
+      return 'roadSOSUserProfile:guest';
+    }
+  };
+
   const [userProfile, setUserProfile] = useState(() => {
-    const saved = localStorage.getItem('userProfile');
+    const key = getProfileStorageKey();
+    const saved = localStorage.getItem(key);
     return saved ? JSON.parse(saved) : defaultProfile;
   });
 
-  const updateUserProfile = (newData) => {
+  const updateUserProfile = async (newData) => {
     setUserProfile(newData);
-    localStorage.setItem('userProfile', JSON.stringify(newData));
+    const key = getProfileStorageKey();
+    localStorage.setItem(key, JSON.stringify(newData));
+
+    if (currentUser?.id) {
+      try {
+        const response = await fetch(`${API_BASE}/api/auth/profile/${currentUser.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newData),
+        });
+
+        if (!response.ok) {
+          const data = await response.json();
+          console.error('Profile update failed:', data.message || response.statusText);
+        }
+      } catch (updateError) {
+        console.error('Profile update error:', updateError);
+      }
+    }
   };
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (!currentUser?.id) {
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE}/api/auth/profile/${currentUser.id}`);
+        const data = await response.json();
+
+        if (response.ok && data.success && data.user) {
+          const profileData = {
+            name: data.user.name || defaultProfile.name,
+            photo: data.user.photo || defaultProfile.photo,
+            address: data.user.address || defaultProfile.address,
+            bloodGroup: data.user.bloodGroup || defaultProfile.bloodGroup,
+            allergies: data.user.allergies || defaultProfile.allergies,
+            medications: data.user.medications || defaultProfile.medications,
+            medicalNotes: data.user.medicalNotes || defaultProfile.medicalNotes,
+            emergencyContacts: data.user.emergencyContacts?.length
+              ? data.user.emergencyContacts
+              : defaultProfile.emergencyContacts,
+          };
+
+          setUserProfile(profileData);
+          localStorage.setItem(getProfileStorageKey(), JSON.stringify(profileData));
+        }
+      } catch (fetchError) {
+        console.error('Failed to load profile from backend:', fetchError);
+      }
+    };
+
+    fetchProfile();
+  }, [currentUser]);
+
+  useEffect(() => {
+    const handleRoadSOSUserChanged = () => {
+      try {
+        const saved = localStorage.getItem('roadSOSUser');
+        setCurrentUser(saved ? JSON.parse(saved) : null);
+      } catch {
+        setCurrentUser(null);
+      }
+    };
+
+    window.addEventListener('roadSOSUserChanged', handleRoadSOSUserChanged);
+
+    return () => {
+      window.removeEventListener('roadSOSUserChanged', handleRoadSOSUserChanged);
+    };
+  }, []);
 
   useEffect(() => {
     const handleOnline = () => setIsOffline(false);

@@ -111,3 +111,210 @@
   background-color: var(--accent-hover);
   box-shadow: 0 0 0 20px rgba(239, 68, 68, 0.2);
 }
+
+/* Login page styling */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem 4rem;
+  background: radial-gradient(circle at top left, rgba(239, 68, 68, 0.18), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.16), transparent 24%),
+    linear-gradient(180deg, #071025 0%, #0f172a 55%, #111827 100%);
+  color: #f8fafc;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 980px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1.5rem;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  backdrop-filter: blur(18px);
+}
+
+@media (min-width: 860px) {
+  .login-card {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.login-hero,
+.login-form-panel {
+  padding: 2.5rem;
+}
+
+.login-hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.75rem;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(30, 41, 59, 0.92));
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.8rem 1rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color:red;
+  font-weight: 700;
+  font-size:30px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.hero-badge svg {
+  color: #ef4444;
+}
+
+.hero-content h1 {
+  font-size: clamp(2rem, 2.4vw, 2.75rem);
+  line-height: 1.05;
+  margin-bottom: 1rem;
+}
+
+.hero-content p {
+  font-size: 1rem;
+  color: rgba(248, 250, 252, 0.8);
+  line-height: 1.8;
+}
+
+.hero-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.feature-pill {
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 0.95rem;
+  color: #f8fafc;
+}
+
+.hero-footnote {
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(248, 250, 252, 0.72);
+  font-size: 0.95rem;
+}
+
+.login-form-panel {
+  background: rgba(15, 23, 42, 0.88);
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.login-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.login-subtitle {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(248, 250, 252, 0.72);
+  margin-bottom: 0.5rem;
+}
+
+.login-form-panel h2 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.login-step {
+  font-size: 0.85rem;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(239, 68, 68, 0.16);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.login-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.form-group {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.form-label {
+  color: rgba(248, 250, 252, 0.78);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.95rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: #f8fafc;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-input::placeholder {
+  color: rgba(248, 250, 252, 0.5);
+}
+
+.form-input:focus {
+  border-color: rgba(239, 68, 68, 0.75);
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.12);
+}
+
+.login-error {
+  padding: 0.95rem 1rem;
+  border-radius: 1rem;
+  background: rgba(248, 113, 113, 0.14);
+  color: #fecaca;
+  border: 1px solid rgba(248, 113, 113, 0.25);
+  font-size: 0.95rem;
+}
+
+.login-submit {
+  width: 100%;
+  justify-content: center;
+  padding: 0.95rem 1rem;
+  font-size: 1rem;
+}
+
+.auth-switch {
+  margin-top: 1.25rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  color: rgba(248, 250, 252, 0.75);
+  font-size: 0.95rem;
+}
+
+.toggle-link {
+  color: #fef2f2;
+  font-weight: 700;
+  background: transparent;
+  border: none;
+  text-decoration: underline;
+}
+
+.toggle-link:hover {
+  color: #fff;
+}

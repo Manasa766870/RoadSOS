@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { EmergencyContext } from '../context/EmergencyContext';
 import ServiceCard from '../components/common/ServiceCard';
-import { Filter, MapPin } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import { useTranslation } from '../context/LanguageContext';
 import './pages.css';
 
@@ -48,7 +48,7 @@ const Dashboard = () => {
 
   return (
     <div className="page-container px-4 py-6">
-      <div className="flex justify-between items-center mb-6">
+      <div className="mb-6">
         <div>
           <h1 className="text-2xl font-bold">{t('nearbyServices')}</h1>
           <p className="text-sm text-muted flex items-center">
@@ -56,7 +56,6 @@ const Dashboard = () => {
             {location ? t('withinRadius') : t('locatingYou')}
           </p>
         </div>
-        <button className="icon-btn bg-white shadow-sm border"><Filter size={20} /></button>
       </div>
 
       <div className="filter-chips mb-6">
